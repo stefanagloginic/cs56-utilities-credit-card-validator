@@ -1,0 +1,5 @@
+javadoc/
+build/
+*.class
+*~
+.ant-targets-build.xml

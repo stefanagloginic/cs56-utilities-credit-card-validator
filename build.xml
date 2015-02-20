@@ -21,7 +21,7 @@
 
     <classpath>
       <pathelement location="build"/>
-      <pathelement location="/cs/faculty/pconrad/public_html/cs56/lib/junit-4.8.2.jar"/>
+      <pathelement location="lib/junit-4.8.2.jar"/>
     </classpath>
   </javac>
 </target>
@@ -46,7 +46,7 @@
   <junit haltonerror="no" haltonfailure="no">
 
     <classpath>
-      <pathelement location="/cs/faculty/pconrad/public_html/cs56/lib/junit-4.8.2.jar"/>
+      <pathelement location="lib/junit-4.8.2.jar"/>
       <pathelement location="build"/>
     </classpath>
 
@@ -71,7 +71,7 @@
     <fileset dir="src" includes="**/*.java"/>
 
     <classpath>
-      <pathelement location="/cs/faculty/pconrad/public_html/cs56/lib/junit-4.8.2.jar"/>
+      <pathelement location="lib/junit-4.8.2.jar"/>
     </classpath>
   </javadoc>
   <!-- delete the old javadoc -->

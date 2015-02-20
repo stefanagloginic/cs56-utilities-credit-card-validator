@@ -1,3 +1,5 @@
+package edu.ucsb.cs56.projects.utilities.credit_card_validator;
+
 import java.util.Scanner;
 
 public class Menu{

@@ -1,6 +1,9 @@
 package edu.ucsb.cs56.projects.utilities.credit_card_validator;
 
 import java.util.*; 
+
+
+// I am pretty sure this is not generating valid cards
 public class RandomCardGen {
     /**
        holds a string representing the type of the credit card

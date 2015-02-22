@@ -30,7 +30,7 @@
 </target>
 
 <target name="run" depends="compile" description="run the Main Menu program.">
-  <java classname="${package}.${mainClass}" classpath="build" fork="false"/>
+  <java classname="${package}.${mainClass}" classpath="build" fork="true"/>
 </target>
 
 <target name="clean" description="gets rid of any unnecessary files and directories">

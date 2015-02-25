@@ -7,20 +7,35 @@ import java.util.Scanner;
 public class CCValidator {
     
     /**
-       checks if the credit card number is valid.
-       returns a string of "approved" or "denied"
-       as the result of checking the credit card number
-       @param cardNumber a string of numbers representing credit card number
+		string to hold credit card number
     */
-    public static String CheckCard(String cardNumber) {
+
 	/**
-	   holds the user input number in a string 
+		reversed cc number used in validation algorithm
 	*/
-        String CCnumber = null;
 	/**
 	   a character array that holds the string of credit card number
 	*/
-        char[] CCnumberArray;
+
+	/** 
+		tells whether credit card number is valid or not
+	*/
+
+   /* public CCValidator(String cardNumber) {
+    	this.cardNumber = new String(cardNumber);
+    	this.reversedNumber = new StringBuilder(this.cardNumber).reverse().toString();
+    	this.reversedDigitArray = this.reversedNumber.toCharArray();
+    }*/
+
+    /**
+       checks if the credit card number is valid.
+       returns a string of "approved" or "denied"
+       as the result of checking the credit card number
+       @param string of credit card number
+    */
+    public static boolean isValid(String cardNumber) {
+    	String reversedNumber = new StringBuilder(cardNumber).reverse().toString();
+    	char [] reversedDigitArray = reversedNumber.toCharArray();
 	/**
 	   temerialy holds a single digit from the character array
 	*/
@@ -34,42 +49,44 @@ public class CCValidator {
 	*/
         int sum = 0;
 	
-	//algorathism of checking a valid credit card
-	CCnumber = cardNumber;
-	CCnumberArray = CCnumber.toCharArray();
-	for (int x = 0; x < 16; x++){
-	    if (x%2 == 0){
-		tempDigitHolder = (char)(int) CCnumberArray[x];
-		singleDigit = Character.getNumericValue(tempDigitHolder);
-		singleDigit = singleDigit * 2;
-		if (singleDigit > 9){
-		    singleDigit = singleDigit%10 + (singleDigit - singleDigit%10)/10;
-		    sum += singleDigit;
-		}
-		else
-		    sum += singleDigit;
-	    }
-	    else{
-		tempDigitHolder = (char)(int) CCnumberArray[x];
-		singleDigit = Character.getNumericValue(tempDigitHolder);
-                    sum += singleDigit;
-	    }
-	}  
-        
-//checks if the first number is 0
-	tempDigitHolder = (char)(int) CCnumberArray[0];
-	singleDigit = Character.getNumericValue(tempDigitHolder);
 
-//returns final result
-	if(sum%10 == 0 & singleDigit != 0){
-	    return "approved";
-	}
-	else{
-	    return "denied";
-	}
+	// Luhn algorithm for checking a valid credit card
+
+    // First find the sum according to the algorithm
+
+		for (int x = 0; x < 16; x++){ // Starting from the 1st digit, we double every other number
+								  // Then sum each of the digits in the modified digit list
+			if (x%2 == 1) {
+				tempDigitHolder = (char)(int) reversedDigitArray[x];
+				singleDigit = Character.getNumericValue(tempDigitHolder);
+				singleDigit = singleDigit * 2; // double every other digit starting from first digit
+
+				if (singleDigit > 9) {
+			    	singleDigit = singleDigit%10 + 1; // 10 = 1 + 0 so take %10 and add 1
+			    	sum += singleDigit;
+				}
+				else {
+			    	sum += singleDigit;
+				}
+			}
+
+		    else {
+				tempDigitHolder = (char)(int) reversedDigitArray[x];
+				singleDigit = Character.getNumericValue(tempDigitHolder);
+	        	sum += singleDigit; // if we are looking at o
+		    }
+
+		}
+
+	// if sum is a multiple of 10 and is not equal to 0, then cc number is valid
+		if(sum%10 == 0 && sum != 0) {
+		    return true;
+		}
+		// else not a valid number
+		else {
+		    return false;
+		}
 	
-        
-        
-    }
+	}
     
 }

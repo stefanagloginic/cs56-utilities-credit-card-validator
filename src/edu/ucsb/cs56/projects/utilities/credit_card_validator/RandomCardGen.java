@@ -26,7 +26,8 @@ public class RandomCardGen {
 	/**
 	   the created new card
 	*/
-        String newCard = null;
+	   
+    String newCard = null;
 	
 	//making a new card
 	int random0 = (int)(9*Math.random()+1);

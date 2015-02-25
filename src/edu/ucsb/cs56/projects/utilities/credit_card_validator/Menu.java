@@ -8,16 +8,16 @@ import java.awt.*;
 public class Menu extends JFrame{
 
 
-	// Textfield where user can enter cardNumber
-	private JTextField cardNumber;
+	// Textfield where user can enter cardNumberField
+	private JTextField cardNumberField;
 	// User presses this button when ready to validate CC number
 	private JButton validateCardNumber;
 
 	// User presses this button to generate card numbers
 	private JButton generateCardNumber;
 
-	// Textfield where generated card number will show up
-	private JTextField generatedNumber;
+	private JLabel cardTypeLabel;
+
 	// Constructor for Menu calls the initUI() method
 	public Menu() {
 		initUI();
@@ -28,13 +28,13 @@ public class Menu extends JFrame{
 
 		// Gotta change this to verify if the vard is validated or not
 		public void actionPerformed (ActionEvent ae) {
-			String temp2 = new String(cardNumber.getText());
+			String temp2 = new String(cardNumberField.getText());
 			if (temp2.length() != 16)
-				cardNumber.setText("Not a valid credit card number!");
+				cardNumberField.setText("Not a valid credit card number!");
 			else if (CCValidator.isValid(temp2))
-			    cardNumber.setText("This is a valid credit card number!");
+			    cardNumberField.setText("This is a valid credit card number!");
 			else
-			    cardNumber.setText("This is an invalid credit card number!");
+			    cardNumberField.setText("This is an invalid credit card number!");
 		}
 	}
 
@@ -47,11 +47,11 @@ public class Menu extends JFrame{
 
 	// generates a card number and enters it in the bottom text field
 	public void generateCard() {
-		String preText = generatedNumber.getText();
-		while (preText.equals(generatedNumber.getText())) {
+		String preText = cardNumberField.getText();
+		while (preText.equals(cardNumberField.getText())) {
 			String tempNumber = RandomCardGen.RandomCard();
 			if (CCValidator.isValid(tempNumber)){
-	   			generatedNumber.setText(tempNumber);
+	   			cardNumberField.setText(tempNumber);
 				//System.out.println("This is a: " + RandomCardGen.CardType + " Card");
 				//cardMade += 1;
 			}
@@ -63,20 +63,31 @@ public class Menu extends JFrame{
 
 	// creates the text field and buttons and adds them to JFrame
 	public void initUI() {
-		cardNumber = new JTextField(12);
+		cardNumberField = new JTextField(12);
 		validateCardNumber = new JButton("Validate");
 		generateCardNumber = new JButton("Generate");
-		generatedNumber = new JTextField(12);
-		cardNumber.setText("Enter your credit card number here");
-		generatedNumber.setText("Your generated card number will display here");
+		cardNumberField = new JTextField(12);
+		cardNumberField.setText("Enter your credit card number here");
+		cardTypeLabel = new JLabel("Card Type:");
 		this.setTitle("Credit Card Validator");
-		this.setSize(600,400);
+		this.setSize(600,100);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.getContentPane().add(BorderLayout.NORTH,cardNumber);
-		this.getContentPane().add(BorderLayout.EAST,validateCardNumber);
-		this.getContentPane().add(BorderLayout.WEST,generateCardNumber);
-		this.getContentPane().add(BorderLayout.SOUTH,generatedNumber);
+		GroupLayout layout = new GroupLayout(this.getContentPane());
+    	this.getContentPane().setLayout(layout);
+
+    	layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+		    .addGroup(layout.createSequentialGroup()
+		    	.addComponent(generateCardNumber, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+		        .addComponent(validateCardNumber, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		    .addComponent(cardTypeLabel, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+		    .addComponent(cardNumberField, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+
+		layout.setVerticalGroup(layout.createSequentialGroup()
+		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+		        .addComponent(generateCardNumber).addComponent(validateCardNumber))
+		    .addComponent(cardTypeLabel)
+		    .addComponent(cardNumberField));
 		this.setVisible(true);
 		validateCardNumber.addActionListener(new ValidateListener());
 		generateCardNumber.addActionListener(new GenerateListener());

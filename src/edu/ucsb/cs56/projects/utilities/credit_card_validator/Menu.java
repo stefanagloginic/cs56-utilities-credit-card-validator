@@ -56,6 +56,13 @@ public class Menu extends JFrame{
 		}
 	}
 
+
+	class RadioButtonListener implements ActionListener {
+		public void actionPerformed (ActionEvent ae) {
+			
+		}
+	}
+
 	// TODO: add action listeners for RadioButtones and part in validate to check a box based on card type
 
 
@@ -147,10 +154,11 @@ public class Menu extends JFrame{
 
         pack();
      	this.setVisible(true);
- 		//this.repaint();
 
 		validateButton.addActionListener(new ValidateListener());
 		generateButton.addActionListener(new GenerateListener());
+		visaRadioButton.addActionListener(new RadioButtonListener());
+		masterCardRadioButton.addActionListener(new RadioButtonListener());
 		
 		
 	}

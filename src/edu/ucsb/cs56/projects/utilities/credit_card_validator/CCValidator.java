@@ -6,11 +6,7 @@ import java.util.Scanner;
  */
 public class CCValidator {
     
-/**
-	static int to hold card type across classes, making it available in menu class
-	0= other/none, 1 = visa, 2 = mastercard, 3 = amex, 4 = discover
-*/
-    public static int cardType = 0;
+
     /**
 		string to hold credit card number
     */
@@ -82,31 +78,6 @@ public class CCValidator {
 
 		}
 
-/**
-	Check for card type based on first couple digits:
-	visas start in 4, mastercards are 51-55, etc
-*/
-		int firstNumber = reversedDigitArray[-1];
-		int secondNumber = reversedDigitArray[-2];
-		String strFirstSix = "";
-
-//get first 6 digits (necessary to check for discover card)
-		for(int i = -1; i>=-6; i--)
-		{
-			strFirstSix += reversedDigitArray[i];
-		}
-		int firstSix = Integer.parseInt(strFirstSix);
-
-		//visa
-		if (firstNumber==4){cardType = 1;}
-		//mastercard
-		else if (firstNumber==5 && secondNumber>=1 && secondNumber<=5){cardType = 2;}
-		//amex
-		else if (firstNumber==3 && (secondNumber==4 || secondNumber==7)){cardType = 3;}
-		//discover
-		else if ((firstSix >= 601100 && firstSix<601200) || (firstSix>= 622126 && firstSix <= 622925) 
-			|| (firstSix >= 644000 && firstSix< 660000)){cardType = 4;}
-
 	// if sum is a multiple of 10 and is not equal to 0, then cc number is valid
 		if(sum%10 == 0 && sum != 0) {
 		    return true;
@@ -117,5 +88,40 @@ public class CCValidator {
 		}
 	
 	}
+
+
+	/**
+	Check for card type based on first couple digits:
+	visas start in 4, mastercards are 51-55, etc
+*/
+	public static int getCardType(String cardNumber){
+
+		//String cardNumber = new StringBuilder(cardNumber).toString();
+    	char [] digitArray = cardNumber.toCharArray();		
+
+		int firstNumber = digitArray[1];
+		int secondNumber = digitArray[2];
+		String strFirstSix = "";
+
+		//get first 6 digits (necessary to check for discover card)
+		for(int i = 0; i<6; i++)
+		{
+			strFirstSix += digitArray[i];
+		}
+		int firstSix = Integer.parseInt(strFirstSix);
+
+		//visa
+		if (firstNumber==4){return 1;}
+		//mastercard
+		else if (firstNumber==5 && secondNumber>=1 && secondNumber<=5){return 2;}
+		//amex
+		else if (firstNumber==3 && (secondNumber==4 || secondNumber==7)){return 3;}
+		//discover
+		else if ((firstSix >= 601100 && firstSix<601200) || (firstSix>= 622126 && firstSix <= 622925) 
+			|| (firstSix >= 644000 && firstSix< 660000)){return 4;}
+	
+		return 0;
+	}
+
     
 }

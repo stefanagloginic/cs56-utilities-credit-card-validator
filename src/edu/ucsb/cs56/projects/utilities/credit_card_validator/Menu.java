@@ -24,10 +24,11 @@ public class Menu extends JFrame{
 	private JLabel cardTypeLabel;
 
 	//Radio buttons for the different card types we can make
-	JRadioButton visaRadioButton = new JRadioButton("Visa");
-    JRadioButton masterCardRadioButton = new JRadioButton("MasterCard");
-    JRadioButton amexRadioButton = new JRadioButton("Amex");
-    JRadioButton discoverRadioButton = new JRadioButton("Discover");
+	private JComboBox cardTypeComboBox = new JComboBox();
+	//JRadioButton visaRadioButton = new JRadioButton("Visa");
+    //JRadioButton masterCardRadioButton = new JRadioButton("MasterCard");
+    //JRadioButton amexRadioButton = new JRadioButton("Amex");
+    //JRadioButton discoverRadioButton = new JRadioButton("Discover");
 
 	// Constructor for Menu calls the initUI() method
 	public Menu() {
@@ -57,7 +58,7 @@ public class Menu extends JFrame{
 	}
 
 
-	class RadioButtonListener implements ActionListener {
+	class ComboBoxListener implements ActionListener {
 		public void actionPerformed (ActionEvent ae) {
 			
 		}
@@ -87,12 +88,10 @@ public class Menu extends JFrame{
 		cardNumberField = new JTextField(12);
 		validateButton = new JButton("Validate");
 		generateButton = new JButton("Generate");
-		visaRadioButton = new JRadioButton("Visa");
-        masterCardRadioButton = new JRadioButton("MasterCard");
-        amexRadioButton = new JRadioButton("Amex");
-        discoverRadioButton = new JRadioButton("Discover");
+
         cardTypeLabel = new JLabel("Card Type:");
 		cardNumberField.setText("Enter your credit card number here");
+		cardTypeComboBox = new JComboBox();
 		
 		
 		this.setTitle("Credit Card Validator");
@@ -101,13 +100,9 @@ public class Menu extends JFrame{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 
- 
-        // remove redundant default border of check boxes - they would hinder
-        // correct spacing and aligning (maybe not needed on some look and feels)
-        visaRadioButton.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        masterCardRadioButton.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        amexRadioButton.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        discoverRadioButton.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+		String[] description = { "Visa", "MasterCard","Amex","Discover"};
+		for (int i = 0; i < 4; i++){cardTypeComboBox.addItem(description[i]);}
+      	
  
         //create new grouplayout and set contentpane to this layout
         GroupLayout layout = new GroupLayout(this.getContentPane());
@@ -117,17 +112,11 @@ public class Menu extends JFrame{
         layout.setAutoCreateContainerGaps(true);
  
         layout.setHorizontalGroup(layout.createSequentialGroup()
-            //.addComponent(cardTypeLabel)
             .addGroup(layout.createParallelGroup(LEADING)
                 .addComponent(cardNumberField)
-            	.addGroup(layout.createSequentialGroup()
+            	.addGroup(layout.createParallelGroup()
                     .addComponent(cardTypeLabel)
-                    .addGroup(layout.createParallelGroup(LEADING)
-                        .addComponent(visaRadioButton)
-                        .addComponent(amexRadioButton))
-                    .addGroup(layout.createParallelGroup(LEADING)
-                        .addComponent(masterCardRadioButton)
-                        .addComponent(discoverRadioButton))))
+                    .addComponent(cardTypeComboBox)))
             .addGroup(layout.createParallelGroup(LEADING)
                 .addComponent(validateButton)
                 .addComponent(generateButton))
@@ -137,28 +126,19 @@ public class Menu extends JFrame{
  
         layout.setVerticalGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(BASELINE)
-                //.addComponent(cardTypeLabel)
                 .addComponent(cardNumberField)
                 .addComponent(validateButton))
             .addGroup(layout.createParallelGroup(LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(BASELINE)
-                        .addComponent(cardTypeLabel)
-                        .addComponent(visaRadioButton)
-                        .addComponent(masterCardRadioButton))
-                    .addGroup(layout.createParallelGroup(BASELINE)
-                        .addComponent(amexRadioButton)
-                        .addComponent(discoverRadioButton)))
+            	.addComponent(cardTypeLabel)
                 .addComponent(generateButton))
-        );
+        	.addComponent(cardTypeComboBox));
 
         pack();
      	this.setVisible(true);
 
 		validateButton.addActionListener(new ValidateListener());
 		generateButton.addActionListener(new GenerateListener());
-		visaRadioButton.addActionListener(new RadioButtonListener());
-		masterCardRadioButton.addActionListener(new RadioButtonListener());
+		cardTypeComboBox.addActionListener(new ComboBoxListener());
 		
 		
 	}

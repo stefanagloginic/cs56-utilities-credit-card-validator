@@ -10,7 +10,7 @@ import java.awt.*;
 
 public class Menu extends JFrame{
 
-
+	private String cardType = new String();
 	// Textfield where user can enter cardNumberField
 	private JTextField cardNumberField;
 	
@@ -37,55 +37,47 @@ public class Menu extends JFrame{
 
 
 	class ValidateListener implements ActionListener {
-
+		// sometimes generates bad cards (when last number is 10)
 		// Gotta change this to verify if the vard is validated or not
 		public void actionPerformed (ActionEvent ae) {
 			String temp2 = new String(cardNumberField.getText());
-			if (temp2.length() != 16)
-				cardNumberField.setText("Not a valid credit card number!");
-			else if (CCValidator.isValid(temp2))
+			if (CCValidator.isValid(temp2))
 			    cardNumberField.setText("This is a valid credit card number!");
 			else
 			    cardNumberField.setText("This is an invalid credit card number!");
 		}
 	}
 
-	// Works
+
+
+	// Sets the cardType and generates corresponding card number when
+	// generate button is clicked
 	class GenerateListener implements ActionListener {
 		public void actionPerformed (ActionEvent ae) {
-			generateCard();
-		}
-	}
-
-
-	class ComboBoxListener implements ActionListener {
-		public void actionPerformed (ActionEvent ae) {
-			
-		}
-	}
-
-	// TODO: add action listeners for RadioButtones and part in validate to check a box based on card type
-
-
-	// generates a card number and enters it in the bottom text field
-	public void generateCard() {
-		String preText = cardNumberField.getText();
-		while (preText.equals(cardNumberField.getText())) {
-			String tempNumber = RandomCardGen.RandomCard();
-			if (CCValidator.isValid(tempNumber)){
-	   			cardNumberField.setText(tempNumber);
-				//System.out.println("This is a: " + RandomCardGen.CardType + " Card");
-				//cardMade += 1;
+			Menu.this.cardType = (String)Menu.this.cardTypeComboBox.getSelectedItem();
+			switch (Menu.this.cardType) {
+				case "Visa":
+					cardNumberField.setText(Visa.generateCard());
+					break;
+				case "Amex":
+					cardNumberField.setText(AmericanExpress.generateCard());
+					break;
+				case "Discover":
+					cardNumberField.setText(Discover.generateCard());
+					break;
+				case "MasterCard":
+					cardNumberField.setText(MasterCard.generateCard());
+					break;
+				default:
+					cardNumberField.setText("Please select a card type!");
+					break;
 			}
 		}
 	}
 
-	//private JPanel panel;
-
-
 	// creates the text field and buttons and adds them to JFrame
 	public void initUI() {
-		cardNumberField = new JTextField(12);
+		cardNumberField = new JTextField(20);
 		validateButton = new JButton("Validate");
 		generateButton = new JButton("Generate");
 
@@ -100,8 +92,8 @@ public class Menu extends JFrame{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 
-		String[] description = { "Visa", "MasterCard","Amex","Discover"};
-		for (int i = 0; i < 4; i++){cardTypeComboBox.addItem(description[i]);}
+		String[] description = { "Pick a card type","Visa", "MasterCard","Amex","Discover"};
+		for (int i = 0; i < 5; i++){cardTypeComboBox.addItem(description[i]);}
       	
  
         //create new grouplayout and set contentpane to this layout
@@ -138,7 +130,7 @@ public class Menu extends JFrame{
 
 		validateButton.addActionListener(new ValidateListener());
 		generateButton.addActionListener(new GenerateListener());
-		cardTypeComboBox.addActionListener(new ComboBoxListener());
+		//cardTypeComboBox.addActionListener(new ComboBoxListener());
 		
 		
 	}

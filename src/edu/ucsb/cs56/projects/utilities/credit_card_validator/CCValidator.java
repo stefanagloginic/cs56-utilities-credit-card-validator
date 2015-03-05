@@ -53,29 +53,53 @@ public class CCValidator {
 	// Luhn algorithm for checking a valid credit card
 
     // First find the sum according to the algorithm
+        if (reversedNumber.length() == 15) {
+        	for (int x = 0; x < 15; x++) {
+        		if (x%2 == 1) {
+					tempDigitHolder = (char)(int) reversedDigitArray[x];
+					singleDigit = Character.getNumericValue(tempDigitHolder);
+					singleDigit = singleDigit * 2; // double every other digit starting from first digit
 
-		for (int x = 0; x < 16; x++){ // Starting from the 1st digit, we double every other number
-								  // Then sum each of the digits in the modified digit list
-			if (x%2 == 1) {
-				tempDigitHolder = (char)(int) reversedDigitArray[x];
-				singleDigit = Character.getNumericValue(tempDigitHolder);
-				singleDigit = singleDigit * 2; // double every other digit starting from first digit
+					if (singleDigit > 9) {
+				    	singleDigit = singleDigit%10 + 1; // 10 = 1 + 0 so take %10 and add 1
+				    	sum += singleDigit;
+					}
+					else {
+				    	sum += singleDigit;
+					}
+				}
 
-				if (singleDigit > 9) {
-			    	singleDigit = singleDigit%10 + 1; // 10 = 1 + 0 so take %10 and add 1
-			    	sum += singleDigit;
+			    else {
+					tempDigitHolder = (char)(int) reversedDigitArray[x];
+					singleDigit = Character.getNumericValue(tempDigitHolder);
+		        	sum += singleDigit;
+		        }
+        	}
+        }
+		else {
+			for (int x = 0; x < 16; x++){ // Starting from the 1st digit, we double every other number
+									  // Then sum each of the digits in the modified digit list
+				if (x%2 == 1) {
+					tempDigitHolder = (char)(int) reversedDigitArray[x];
+					singleDigit = Character.getNumericValue(tempDigitHolder);
+					singleDigit = singleDigit * 2; // double every other digit starting from first digit
+
+					if (singleDigit > 9) {
+				    	singleDigit = singleDigit%10 + 1; // 10 = 1 + 0 so take %10 and add 1
+				    	sum += singleDigit;
+					}
+					else {
+				    	sum += singleDigit;
+					}
 				}
-				else {
-			    	sum += singleDigit;
-				}
+
+			    else {
+					tempDigitHolder = (char)(int) reversedDigitArray[x];
+					singleDigit = Character.getNumericValue(tempDigitHolder);
+		        	sum += singleDigit; // if we are looking at o
+			    }
+
 			}
-
-		    else {
-				tempDigitHolder = (char)(int) reversedDigitArray[x];
-				singleDigit = Character.getNumericValue(tempDigitHolder);
-	        	sum += singleDigit; // if we are looking at o
-		    }
-
 		}
 
 	// if sum is a multiple of 10 and is not equal to 0, then cc number is valid

@@ -2,6 +2,11 @@ package edu.ucsb.cs56.projects.utilities.credit_card_validator;
 
 import java.util.*; 
 
+
+/** Class that generates a Visa credit card number
+* @author Jonathan Easterman Ishi Von Meier
+* @version  Winter 2015, CS 56
+*/
 public class Visa {
 	public static String cardNumber;
 
@@ -41,9 +46,8 @@ public class Visa {
 			temp = Character.toString(luhnString.charAt(i));
 			luhnSum += Integer.parseInt(temp);
 		}
-	
-		// checkDigit = 10 - (sum of digits in luhnString)%10
 
+		// Calculate the check digit based on the luhnSum
 		int checkDigit = 10 - (luhnSum%10);
 		if (checkDigit == 10)
 			checkDigit = 0;

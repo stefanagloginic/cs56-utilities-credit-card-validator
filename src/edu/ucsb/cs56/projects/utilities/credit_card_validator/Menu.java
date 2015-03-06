@@ -7,10 +7,18 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.*;
 
+/** Class displays a GUI that allows users to 
+* generate a Visa, Amex, Discover, or MasterCard
+* credit card number. Users can also validate a number
+* @author Jonathan Easterman Ishi Von Meier
+* @version  Winter 2015, CS 56
+*/
 
 public class Menu extends JFrame{
-
+	// String attribute that holds card type of current selection
+	// in ComboBox
 	private String cardType = new String();
+
 	// Textfield where user can enter cardNumberField
 	private JTextField cardNumberField;
 	
@@ -20,15 +28,11 @@ public class Menu extends JFrame{
 	// User presses this button to generate card numbers
 	private JButton generateButton;
 
-	//Simple Label to explain to user what radio buttons do 
+	//Simple Label to explain to user what is held in the comboBox
 	private JLabel cardTypeLabel;
 
-	//Radio buttons for the different card types we can make
+	//ComboBox to hold all of the different card options
 	private JComboBox cardTypeComboBox = new JComboBox();
-	//JRadioButton visaRadioButton = new JRadioButton("Visa");
-    //JRadioButton masterCardRadioButton = new JRadioButton("MasterCard");
-    //JRadioButton amexRadioButton = new JRadioButton("Amex");
-    //JRadioButton discoverRadioButton = new JRadioButton("Discover");
 
 	// Constructor for Menu calls the initUI() method
 	public Menu() {
@@ -129,30 +133,12 @@ public class Menu extends JFrame{
      	this.setVisible(true);
 
 		validateButton.addActionListener(new ValidateListener());
-		generateButton.addActionListener(new GenerateListener());
-		//cardTypeComboBox.addActionListener(new ComboBoxListener());
-		
-		
+		generateButton.addActionListener(new GenerateListener());		
 	}
 
-	// GUI is refreshed when a button is clicked
-	public void actionPerformed(ActionEvent ae) {
-		this.repaint();
-	}
-
-	// This is what gets shown on the screen
-	public void paintComponent(Graphics g) {
-		Graphics2D g2d = (Graphics2D)g;
-		g2d.drawString("clicked",50,50);
-	}
-
-
-/**
-	the main function
-	which is a menu let user to choose from
-*/	
-
-	// This is the logic of the menu
+	// Main function calls constructor for a Menu instance
+	// Program logic is handled in initUI() method, which is
+	// called by Menu constructor
     public static void main(String args[]) {
         Menu gui = new Menu();
 	}

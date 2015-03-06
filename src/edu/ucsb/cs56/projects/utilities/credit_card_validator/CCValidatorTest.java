@@ -4,26 +4,16 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /** test class for CCValidator
-@author Jicheng Huang @ Christopher Langford
-@version Mantis Ticket for CS56, Spring 2011
-@see CCValidator
+* @author Jicheng Huang @ Christopher Langford
+* @version Mantis Ticket for CS56, Spring 2011
+* @see CCValidator
 */
 
 
 
 public class CCValidatorTest {
-    /**
-       tests if the outcome of RandomCardGen is valid
-    */
-    @Test public void testRandomCardGen() {
-	Boolean result;
-	
-	String testCard = RandomCardGen.RandomCard();
-	result = CCValidator.isValid(testCard);
-	assertEquals(true, result);
-    }
     
-    /**
+    /*
        test isValid Method in CCValidator class
      */
     @Test public void testisValid() {
@@ -38,7 +28,7 @@ public class CCValidatorTest {
 	assertEquals(true, result);
     }
 
-    /**
+    /*
        test isValid Method with card number contain spaces and "-"
      */
     @Test public void testCardWithSpace(){

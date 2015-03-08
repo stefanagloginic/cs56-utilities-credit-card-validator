@@ -18,22 +18,52 @@ public class Discover {
 		String temp = new String();
 		String newCard = new String();
 		int tmp;
+		int i;
+		int randNumberAdded;
 		Random rand = new Random();
+		
 
 		int cardDigits[] = new int[16];
 
 		// For Discover, 1st digit is always 6
-		cardDigits[0] = 6;
-		newCard += cardDigits[0];
-		// Initialize the 2nd-15th digit to a random number
-		for (int i = 1; i < 15; i++) {
+		//cardDigits[0] = 6;
+		//newCard += cardDigits[0];
+		
+		int randomCase = 1 + rand.nextInt(3); //random case between 1 and 4
+		
+		switch (randomCase) {
+			case 1:
+				newCard += "6011";
+				break;	
+			case 2:
+				randNumberAdded = rand.nextInt(800);
+				newCard+= Integer.toString(622126 + randNumberAdded);
+				break;
+			case 3:
+				randNumberAdded = rand.nextInt(6);
+				newCard+= Integer.toString(644 + randNumberAdded);
+				break;
+			case 4: 
+				newCard += "65";
+				break;
+		}
+		
+		
+		for(i=0; i < newCard.length(); i++) {        //update cardDigits array
+			cardDigits[i] = Character.getNumericValue(newCard.charAt(i));
+		}
+		
+		
+		// Initialize the next-15th digit to a random number
+		for (i = newCard.length(); i < 15; i++) { //newCard.length() gives us next index
 			cardDigits[i] = rand.nextInt(10);
 			newCard += cardDigits[i];
 		}
+		
 
 		String luhnString = new String();
 
-		for (int i = 14; i >= 0; i--) {
+		for (i = 14; i >= 0; i--) {
 			
 			if (i%2 == 0) {
 				tmp = cardDigits[i] * 2;
@@ -46,7 +76,7 @@ public class Discover {
 
 		int luhnSum = 0;
 
-		for (int i = 0; i < luhnString.length(); i++) {
+		for (i = 0; i < luhnString.length(); i++) {
 			temp = Character.toString(luhnString.charAt(i));
 			luhnSum += Integer.parseInt(temp);
 		}

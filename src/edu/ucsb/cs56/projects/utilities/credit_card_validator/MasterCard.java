@@ -23,9 +23,13 @@ public class MasterCard {
 
 		// For Mastercard, 1st digit is always 5
 		cardDigits[0] = 5;
+		int randNumberAdded = rand.nextInt(5);    
+		
+		cardDigits[1] = 1 + randNumberAdded;  //gives us random second digit between 1 and 5		
 		newCard += cardDigits[0];
-		// Initialize the 2nd-15th digit to a random number
-		for (int i = 1; i < 15; i++) {
+		newCard += cardDigits[1];
+		// Initialize the 3rd-15th digit to a random number
+		for (int i = 2; i < 15; i++) {
 			cardDigits[i] = rand.nextInt(10);
 			newCard += cardDigits[i];
 		}

@@ -24,7 +24,7 @@ public class AmericanExpress {
 
 		// For AmericanExpress 1st digit is always 3, 2nd digit is 7
 		cardDigits[0] = 3;
-		cardDigits[1] = 7;
+		cardDigits[1] = 4+3*rand.nextInt(2);
 		newCard += cardDigits[0];
 		newCard += cardDigits[1];
 

@@ -30,6 +30,9 @@ public class Menu extends JFrame{
 
 	//Simple Label to explain to user what is held in the comboBox
 	private JLabel cardTypeLabel;
+	
+	//Simple JLabel to tell user if card number is valid or not
+	private JLabel cardValidLabel;
 
 	//ComboBox to hold all of the different card options
 	private JComboBox cardTypeComboBox = new JComboBox();
@@ -44,14 +47,14 @@ public class Menu extends JFrame{
 		// sometimes generates bad cards (when last number is 10)
 		// Gotta change this to verify if the vard is validated or not
 		public void actionPerformed (ActionEvent ae) {
-			String temp2 = new String(cardNumberField.getText());
-			if (CCValidator.isValid(temp2)){
+			String cardFieldContents = new String(cardNumberField.getText());
+			if (CCValidator.isValid(cardFieldContents)){
 			    //set card type variable, print to label
-				cardTypeLabel.setText("Card Type: " + CCValidator.getCardType(temp2));
-			    cardNumberField.setText("This is a valid credit card number!");
+				cardTypeLabel.setText("Card Type: " + CCValidator.getCardType(cardFieldContents));
+			    cardValidLabel.setText("This is a valid card number!");
 			}
 			else
-			    cardNumberField.setText("This is an invalid credit card number!");
+			    cardValidLabel.setText("This is an invalid card number!");
 		}
 	}
 
@@ -89,13 +92,14 @@ public class Menu extends JFrame{
 		validateButton = new JButton("Validate");
 		generateButton = new JButton("Generate");
 
+		cardValidLabel = new JLabel("");
         cardTypeLabel = new JLabel("Card Type:");
-		cardNumberField.setText("Enter your credit card number here");
+		cardNumberField.setText("Enter credit card number here");
 		cardTypeComboBox = new JComboBox();
 		
 		
 		this.setTitle("Credit Card Validator");
-		this.setSize(400,130);
+		this.setSize(500,150);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
@@ -115,6 +119,7 @@ public class Menu extends JFrame{
             .addGroup(layout.createParallelGroup(LEADING)
                 .addComponent(cardNumberField)
             	.addGroup(layout.createParallelGroup()
+                    .addComponent(cardValidLabel)
                     .addComponent(cardTypeLabel)
                     .addComponent(cardTypeComboBox)))
             .addGroup(layout.createParallelGroup(LEADING)
@@ -129,11 +134,12 @@ public class Menu extends JFrame{
                 .addComponent(cardNumberField)
                 .addComponent(validateButton))
             .addGroup(layout.createParallelGroup(LEADING)
-            	.addComponent(cardTypeLabel)
+            	.addComponent(cardValidLabel)
                 .addComponent(generateButton))
+            .addComponent(cardTypeLabel)
         	.addComponent(cardTypeComboBox));
 
-        //pack();
+        pack();
      	this.setVisible(true);
 
 		validateButton.addActionListener(new ValidateListener());

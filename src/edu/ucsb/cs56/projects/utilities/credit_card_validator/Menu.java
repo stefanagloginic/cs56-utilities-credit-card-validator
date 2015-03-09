@@ -45,8 +45,11 @@ public class Menu extends JFrame{
 		// Gotta change this to verify if the vard is validated or not
 		public void actionPerformed (ActionEvent ae) {
 			String temp2 = new String(cardNumberField.getText());
-			if (CCValidator.isValid(temp2))
+			if (CCValidator.isValid(temp2)){
+			    //set card type variable, print to label
+				cardTypeLabel.setText("Card Type: " + CCValidator.getCardType(temp2));
 			    cardNumberField.setText("This is a valid credit card number!");
+			}
 			else
 			    cardNumberField.setText("This is an invalid credit card number!");
 		}
@@ -75,6 +78,7 @@ public class Menu extends JFrame{
 				default:
 					cardNumberField.setText("Please select a card type!");
 					break;
+			//also print card type to label to keep label current
 			}
 		}
 	}
@@ -91,7 +95,7 @@ public class Menu extends JFrame{
 		
 		
 		this.setTitle("Credit Card Validator");
-		this.setSize(600,100);
+		this.setSize(400,130);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
@@ -129,7 +133,7 @@ public class Menu extends JFrame{
                 .addComponent(generateButton))
         	.addComponent(cardTypeComboBox));
 
-        pack();
+        //pack();
      	this.setVisible(true);
 
 		validateButton.addActionListener(new ValidateListener());

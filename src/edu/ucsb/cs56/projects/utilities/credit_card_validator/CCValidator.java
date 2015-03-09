@@ -97,13 +97,13 @@ public class CCValidator {
 	* visas start in 4, mastercards are 51-55, etc
 	* @param cardNumber String representation of credit card number
 	*/
-	public static int getCardType(String cardNumber){
+	public static String getCardType(String cardNumber){
 
 		//String cardNumber = new StringBuilder(cardNumber).toString();
     	char [] digitArray = cardNumber.toCharArray();		
 
-		int firstNumber = digitArray[1];
-		int secondNumber = digitArray[2];
+		int firstNumber = Character.getNumericValue(digitArray[0]);
+		int secondNumber = Character.getNumericValue(digitArray[1]);
 		String strFirstSix = "";
 
 		//get first 6 digits (necessary to check for discover card)
@@ -114,16 +114,16 @@ public class CCValidator {
 		int firstSix = Integer.parseInt(strFirstSix);
 
 		//visa
-		if (firstNumber==4){return 1;}
+		if (firstNumber==4){return "Visa";}
 		//mastercard
-		else if (firstNumber==5 && secondNumber>=1 && secondNumber<=5){return 2;}
+		else if (firstNumber==5 && secondNumber>=1 && secondNumber<=5){return "Mastercard";}
 		//amex
-		else if (firstNumber==3 && (secondNumber==4 || secondNumber==7)){return 3;}
+		else if (firstNumber==3 && (secondNumber==4 || secondNumber==7)){return "Amex";}
 		//discover
 		else if ((firstSix >= 601100 && firstSix<601200) || (firstSix>= 622126 && firstSix <= 622925) 
-			|| (firstSix >= 644000 && firstSix< 660000)){return 4;}
+			|| (firstSix >= 644000 && firstSix< 660000)){return "Discover";}
 	
-		return 0;
+		return "";
 	}
 
     

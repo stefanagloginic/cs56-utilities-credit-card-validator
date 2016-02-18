@@ -6,6 +6,8 @@ import static javax.swing.GroupLayout.Alignment.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.*;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
 
 /** Class displays a GUI that allows users to 
 * generate a Visa, Amex, Discover, or MasterCard
@@ -21,6 +23,9 @@ public class Menu extends JFrame{
 
 	// Textfield where user can enter cardNumberField
 	private JTextField cardNumberField;
+
+        private String TextFieldInput = "";
+        private int keyType = 0;
 	
 	// User presses this button when ready to validate CC number
 	private JButton validateButton;
@@ -47,7 +52,7 @@ public class Menu extends JFrame{
 		// sometimes generates bad cards (when last number is 10)
 		// Gotta change this to verify if the vard is validated or not
 		public void actionPerformed (ActionEvent ae) {
-			String cardFieldContents = new String(cardNumberField.getText());
+		    String cardFieldContents = TextFieldInput; //changed new String(cardNumberField.getText())
 			if (CCValidator.isValid(cardFieldContents)){
 			    //set card type variable, print to label
 				cardTypeLabel.setText("Card Type: " + CCValidator.getCardType(cardFieldContents));
@@ -85,7 +90,7 @@ public class Menu extends JFrame{
 			}
 		}
 	}
-
+    
 	// creates the text field and buttons and adds them to JFrame
 	public void initUI() {
 		cardNumberField = new JTextField(20);
@@ -143,7 +148,40 @@ public class Menu extends JFrame{
      	this.setVisible(true);
 
 		validateButton.addActionListener(new ValidateListener());
-		generateButton.addActionListener(new GenerateListener());		
+		generateButton.addActionListener(new GenerateListener());
+		cardNumberField.addKeyListener(new KeyListener(){
+			public void keyPressed(KeyEvent keyEvent){
+			    keyType = keyEvent.getKeyCode();
+			    if(keyType == 8){
+				if(!(TextFieldInput.isEmpty())){
+				    if(TextFieldInput.length() == 1){
+					TextFieldInput = "";
+				    }
+				    else{
+					TextFieldInput = TextFieldInput.substring(0,TextFieldInput.length()-1);
+				    }   
+				return;
+				}
+			    }
+			    if(keyType == 13){
+				return;
+			    }
+			}
+			public void keyTyped(KeyEvent keyEvent) {
+			    keyEvent.consume(); //http://stackoverflow.com/questions/7525154/jtextfields-settext-method-doesnt-work-from-a-keylistener
+			    if(!((keyType == 8) || (keyType == KeyEvent.VK_ENTER))){
+				TextFieldInput += keyEvent.getKeyChar();
+				System.out.println(TextFieldInput);
+			    }
+			    String asteriskString = "";
+			    for(int i=0; i < TextFieldInput.length(); ++i){
+				asteriskString += "*";
+			    }
+			    cardNumberField.setText(asteriskString);
+			    return;
+			}
+		  public void keyReleased(KeyEvent keyEvent){}
+		}); 
 	}
 
 	// Main function calls constructor for a Menu instance

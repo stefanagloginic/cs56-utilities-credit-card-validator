@@ -69,6 +69,7 @@ public class Menu extends JFrame{
 	// generate button is clicked
 	class GenerateListener implements ActionListener {
 		public void actionPerformed (ActionEvent ae) {
+		    TextFieldInput = "";
 			Menu.this.cardType = (String)Menu.this.cardTypeComboBox.getSelectedItem();
 			switch (Menu.this.cardType) {
 				case "Visa":

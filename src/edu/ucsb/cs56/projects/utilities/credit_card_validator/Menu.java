@@ -164,7 +164,7 @@ public class Menu extends JFrame{
 				return;
 				}
 			    }
-			    if(keyType == 13){
+			    if(keyType == KeyEvent.VK_ENTER){
 				if (CCValidator.isValid(TextFieldInput)){
 				    //set card type variable, print to label
 				    cardTypeLabel.setText("Card Type: " + CCValidator.getCardType(TextFieldInput));

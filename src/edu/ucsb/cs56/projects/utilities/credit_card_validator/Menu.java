@@ -24,7 +24,11 @@ public class Menu extends JFrame{
 	// Textfield where user can enter cardNumberField
 	private JTextField cardNumberField;
 
+        //Global instance variables
         private String TextFieldInput = "";
+    
+        private String cardFieldContents = ""; //new
+    
         private int keyType = 0;
 	
 	// User presses this button when ready to validate CC number
@@ -39,10 +43,10 @@ public class Menu extends JFrame{
 	//Simple JLabel to tell user if card number is valid or not
 	private JLabel cardValidLabel;
 
-	//ComboBox to hold all of the different card options
+    //ComboBox to hold all of the different card options
 	private JComboBox cardTypeComboBox = new JComboBox();
 
-	// Constructor for Menu calls the initUI() method
+    // Constructor for Menu calls the initUI() method
 	public Menu() {
 		initUI();
 	}
@@ -52,7 +56,12 @@ public class Menu extends JFrame{
 		// sometimes generates bad cards (when last number is 10)
 		// Gotta change this to verify if the vard is validated or not
 		public void actionPerformed (ActionEvent ae) {
+		    if(TextFieldInput == ""){
+		        cardFieldContents = new String(cardNumberField.getText());
+		    }
+	       	else{
 		    String cardFieldContents = TextFieldInput; //changed new String(cardNumberField.getText())
+		    }
 			if (CCValidator.isValid(cardFieldContents)){
 			    //set card type variable, print to label
 				cardTypeLabel.setText("Card Type: " + CCValidator.getCardType(cardFieldContents));
@@ -69,7 +78,7 @@ public class Menu extends JFrame{
 	// generate button is clicked
 	class GenerateListener implements ActionListener {
 		public void actionPerformed (ActionEvent ae) {
-		    TextFieldInput = "";
+		    TextFieldInput = ""; //Need to empty in case there was some previous input
 			Menu.this.cardType = (String)Menu.this.cardTypeComboBox.getSelectedItem();
 			switch (Menu.this.cardType) {
 				case "Visa":
@@ -100,6 +109,7 @@ public class Menu extends JFrame{
 
 		cardValidLabel = new JLabel("");
         cardTypeLabel = new JLabel("Card Type:");
+	
 		cardNumberField.setText("Enter credit card number here");
 		cardTypeComboBox = new JComboBox();
 		
@@ -126,7 +136,7 @@ public class Menu extends JFrame{
                 .addComponent(cardNumberField)
             	.addGroup(layout.createParallelGroup()
                     .addComponent(cardValidLabel)
-                    .addComponent(cardTypeLabel)
+			  .addComponent(cardTypeLabel)
                     .addComponent(cardTypeComboBox)))
             .addGroup(layout.createParallelGroup(LEADING)
                 .addComponent(validateButton)
@@ -166,14 +176,27 @@ public class Menu extends JFrame{
 				}
 			    }
 			    if(keyType == KeyEvent.VK_ENTER){
-				if (CCValidator.isValid(TextFieldInput)){
-				    //set card type variable, print to label
-				    cardTypeLabel.setText("Card Type: " + CCValidator.getCardType(TextFieldInput));
-				    cardValidLabel.setText("This is a valid card number!");
+				int checkLength = TextFieldInput.length();
+				try{
+				    if (CCValidator.isValid(TextFieldInput)){
+					//set card type variable, print to label
+					cardTypeLabel.setText("Card Type: " + CCValidator.getCardType(TextFieldInput));
+					cardValidLabel.setText("This is a valid card number!");
+				    }
+				}catch(ArrayIndexOutOfBoundsException ex){
+				    if(checkLength < 16){
+					cardValidLabel.setText("Not enough digits");
+				        TextFieldInput = "";
+				        return;
+				    }
 				}
-				else
-				    cardValidLabel.setText("This is an invalid card number!");
-				TextFieldInput = "";
+				    if(checkLength > 16){
+					cardValidLabel.setText("Too many digits");
+				    }
+				    else{
+				       cardValidLabel.setText("This is an invalid card number!");
+				    }
+				       TextFieldInput = "";
 				return;
 			    }
 			}

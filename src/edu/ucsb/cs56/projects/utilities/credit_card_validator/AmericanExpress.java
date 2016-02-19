@@ -10,6 +10,7 @@ import java.util.*;
 
 public class AmericanExpress {
 	public static String cardNumber;
+        public static int ValidLength = 15;
 
     /** Generates card number for this type of card
     * @return String representation of an Amex credit card number

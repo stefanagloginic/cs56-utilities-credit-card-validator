@@ -24,11 +24,12 @@ public class Menu extends JFrame{
 	// Textfield where user can enter cardNumberField
 	private JTextField cardNumberField;
 
-        //Global instance variables
+        //Global instance variable for user input
         private String TextFieldInput = "";
-    
+
+        //Global instance variable for JTextField input
         private String cardFieldContents = ""; //new
-    
+        //Global instance variable for KeyListener
         private int keyType = 0;
 	
 	// User presses this button when ready to validate CC number
@@ -160,21 +161,26 @@ public class Menu extends JFrame{
 
 		validateButton.addActionListener(new ValidateListener());
 		generateButton.addActionListener(new GenerateListener());
+		//adding listener for keyboard input from user
 		cardNumberField.addKeyListener(new KeyListener(){
 			public void keyPressed(KeyEvent keyEvent){
 			    keyType = keyEvent.getKeyCode();
 			    System.out.println(keyType);
+			    //Backspace is value 8, check for if backspace was pressed
 			    if(keyType == 8){
 				if(!(TextFieldInput.isEmpty())){
+				    //if there was one asterisk, now should be cleared.
 				    if(TextFieldInput.length() == 1){
 					TextFieldInput = "";
 				    }
 				    else{
+					//otherwise if the length is greater than 1, subtract one digit from input
 					TextFieldInput = TextFieldInput.substring(0,TextFieldInput.length()-1);
 				    }   
 				return;
 				}
 			    }
+			    //checks if the key typed is enter
 			    if(keyType == KeyEvent.VK_ENTER){
 				int checkLength = TextFieldInput.length();
 				try{

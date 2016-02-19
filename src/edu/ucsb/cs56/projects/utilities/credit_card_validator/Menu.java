@@ -152,6 +152,7 @@ public class Menu extends JFrame{
 		cardNumberField.addKeyListener(new KeyListener(){
 			public void keyPressed(KeyEvent keyEvent){
 			    keyType = keyEvent.getKeyCode();
+			    System.out.println(keyType);
 			    if(keyType == 8){
 				if(!(TextFieldInput.isEmpty())){
 				    if(TextFieldInput.length() == 1){
@@ -164,6 +165,14 @@ public class Menu extends JFrame{
 				}
 			    }
 			    if(keyType == 13){
+				if (CCValidator.isValid(TextFieldInput)){
+				    //set card type variable, print to label
+				    cardTypeLabel.setText("Card Type: " + CCValidator.getCardType(TextFieldInput));
+				    cardValidLabel.setText("This is a valid card number!");
+				}
+				else
+				    cardValidLabel.setText("This is an invalid card number!");
+				TextFieldInput = "";
 				return;
 			    }
 			}

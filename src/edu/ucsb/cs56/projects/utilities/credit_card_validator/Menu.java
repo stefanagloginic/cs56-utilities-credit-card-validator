@@ -247,6 +247,10 @@ public class Menu extends JFrame{
 	return asteriskString;
     }
 
+    private int getValidLength(String cardType){
+	return -42;
+    }
+
 	// Main function calls constructor for a Menu instance
 	// Program logic is handled in initUI() method, which is
 	// called by Menu constructor

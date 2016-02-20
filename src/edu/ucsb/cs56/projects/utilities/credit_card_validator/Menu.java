@@ -31,6 +31,8 @@ public class Menu extends JFrame{
         private String cardFieldContents = ""; //new
         //Global instance variable for KeyListener
         private int keyType = 0;
+       //User checks Box if they would like to see card number 
+        private JCheckBox showDigitsCheckBox;
 	
 	// User presses this button when ready to validate CC number
 	private JButton validateButton;
@@ -107,7 +109,7 @@ public class Menu extends JFrame{
 		cardNumberField = new JTextField(20);
 		validateButton = new JButton("Validate");
 		generateButton = new JButton("Generate");
-
+		showDigitsCheckBox = new JCheckBox("Show Digits");
 		cardValidLabel = new JLabel("");
         cardTypeLabel = new JLabel("Card Type:");
 	
@@ -116,7 +118,7 @@ public class Menu extends JFrame{
 		
 		
 		this.setTitle("Credit Card Validator");
-		this.setSize(500,150);
+		this.setSize(700,210);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
@@ -137,10 +139,11 @@ public class Menu extends JFrame{
                 .addComponent(cardNumberField)
             	.addGroup(layout.createParallelGroup()
                     .addComponent(cardValidLabel)
-			  .addComponent(cardTypeLabel)
+		    .addComponent(cardTypeLabel)
                     .addComponent(cardTypeComboBox)))
             .addGroup(layout.createParallelGroup(LEADING)
-                .addComponent(validateButton)
+		.addComponent(showDigitsCheckBox)
+		.addComponent(validateButton)
                 .addComponent(generateButton))
         );
         
@@ -149,23 +152,23 @@ public class Menu extends JFrame{
         layout.setVerticalGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(BASELINE)
                 .addComponent(cardNumberField)
-                .addComponent(validateButton))
+		.addComponent(showDigitsCheckBox))
             .addGroup(layout.createParallelGroup(LEADING)
-            	.addComponent(cardValidLabel)
-                .addComponent(generateButton))
-            .addComponent(cardTypeLabel)
-        	.addComponent(cardTypeComboBox));
+		.addComponent(generateButton))
+	    .addGroup(layout.createParallelGroup(LEADING)                .addComponent(cardValidLabel)
+		.addComponent(validateButton))
+                .addComponent(cardTypeLabel)
+	        .addComponent(cardTypeComboBox));
 
         pack();
      	this.setVisible(true);
-
+	
 		validateButton.addActionListener(new ValidateListener());
 		generateButton.addActionListener(new GenerateListener());
 		//adding listener for keyboard input from user
 		cardNumberField.addKeyListener(new KeyListener(){
 			public void keyPressed(KeyEvent keyEvent){
 			    keyType = keyEvent.getKeyCode();
-			    System.out.println(keyType);
 			    //Backspace is value 8, check for if backspace was pressed
 			    if(keyType == 8){
 				if(!(TextFieldInput.isEmpty())){
@@ -210,18 +213,39 @@ public class Menu extends JFrame{
 			    keyEvent.consume(); //http://stackoverflow.com/questions/7525154/jtextfields-settext-method-doesnt-work-from-a-keylistener
 			    if(!((keyType == 8) || (keyType == KeyEvent.VK_ENTER))){
 				TextFieldInput += keyEvent.getKeyChar();
-				System.out.println(TextFieldInput);
+				//System.out.println(TextFieldInput); used to see if TextFieldInput updates correctly
 			    }
-			    String asteriskString = "";
-			    for(int i=0; i < TextFieldInput.length(); ++i){
-				asteriskString += "*";
-			    }
+			    String asteriskString = createAsteriskString(TextFieldInput);
+			    if(showDigitsCheckBox.isSelected())
+				cardNumberField.setText(TextFieldInput);
+			    else
 			    cardNumberField.setText(asteriskString);
 			    return;
 			}
 		  public void keyReleased(KeyEvent keyEvent){}
-		}); 
+		});
+
+		showDigitsCheckBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+			    if(showDigitsCheckBox.isSelected())
+				cardNumberField.setText(TextFieldInput);
+			    else{
+				String asteriskString = createAsteriskString(TextFieldInput);
+				cardNumberField.setText(asteriskString);
+			    }
+			    return;
+			}
+		    });
+
 	}
+
+    private String createAsteriskString(String digits){
+	String asteriskString = "";
+	for(int i=0; i < TextFieldInput.length(); ++i){
+	    asteriskString += "*";
+	}
+	return asteriskString;
+    }
 
 	// Main function calls constructor for a Menu instance
 	// Program logic is handled in initUI() method, which is

@@ -67,7 +67,7 @@ public class Menu extends JFrame{
 		    }
 			if (CCValidator.isValid(cardFieldContents)){
 			    //set card type variable, print to label
-				cardTypeLabel.setText("Card Type: " + CCValidator.getCardType(cardFieldContents));
+			    cardTypeLabel.setText("Card Type: " + CCValidator.getCardType(cardFieldContents));
 			    cardValidLabel.setText("This is a valid card number!");
 			}
 			else
@@ -98,6 +98,7 @@ public class Menu extends JFrame{
 					break;
 				default:
 					cardNumberField.setText("Please select a card type!");
+					cardValidLabel.setText("Please select a card type!");
 					break;
 			//also print card type to label to keep label current
 			}
@@ -154,8 +155,9 @@ public class Menu extends JFrame{
                 .addComponent(cardNumberField)
 		.addComponent(showDigitsCheckBox))
             .addGroup(layout.createParallelGroup(LEADING)
-		.addComponent(generateButton))
-	    .addGroup(layout.createParallelGroup(LEADING)                .addComponent(cardValidLabel)
+		.addComponent(cardValidLabel)
+	      	.addComponent(generateButton))
+	    .addGroup(layout.createParallelGroup(LEADING)
 		.addComponent(validateButton))
                 .addComponent(cardTypeLabel)
 	        .addComponent(cardTypeComboBox));
@@ -186,26 +188,38 @@ public class Menu extends JFrame{
 			    //checks if the key typed is enter
 			    if(keyType == KeyEvent.VK_ENTER){
 				int checkLength = TextFieldInput.length();
+				int validLength = getValidLength();
 				try{
-				    if (CCValidator.isValid(TextFieldInput)){
+				    if(validLength == -1){
+					cardValidLabel.setText("Please select card type!");
+				    }
+				    else if (CCValidator.isValid(TextFieldInput)){
 					//set card type variable, print to label
 					cardTypeLabel.setText("Card Type: " + CCValidator.getCardType(TextFieldInput));
 					cardValidLabel.setText("This is a valid card number!");
 				    }
+				    else if(checkLength > validLength){
+                                        cardValidLabel.setText("Too many digits");
+                                    }
+				    else if(checkLength < validLength){
+                                        cardValidLabel.setText("Not enough digits");
+                                        TextFieldInput = "";
+                                        return;
+                                    }
+				    else{
+					cardValidLabel.setText("This is an invalid card number!");
+                                    }
+
 				}catch(ArrayIndexOutOfBoundsException ex){
-				    if(checkLength < 16){
+				    if(checkLength < validLength){
 					cardValidLabel.setText("Not enough digits");
 				        TextFieldInput = "";
 				        return;
 				    }
 				}
-				    if(checkLength > 16){
-					cardValidLabel.setText("Too many digits");
-				    }
-				    else{
-				       cardValidLabel.setText("This is an invalid card number!");
-				    }
+				finally{		       
 				       TextFieldInput = "";
+				}
 				return;
 			    }
 			}
@@ -247,8 +261,20 @@ public class Menu extends JFrame{
 	return asteriskString;
     }
 
-    private int getValidLength(String cardType){
-	return -42;
+    private int getValidLength(){
+	Menu.this.cardType = (String)Menu.this.cardTypeComboBox.getSelectedItem();
+	switch (Menu.this.cardType) {
+	case "Visa":
+	    return Visa.VALIDLENGTH;
+	case "Amex":
+	    return AmericanExpress.VALIDLENGTH;
+	case "Discover":
+	    return Discover.VALIDLENGTH;
+	case "MasterCard":
+	    return MasterCard.VALIDLENGTH;
+	default:
+	    return -1;
+	}
     }
 
 	// Main function calls constructor for a Menu instance

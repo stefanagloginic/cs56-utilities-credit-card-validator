@@ -104,15 +104,34 @@ public class Menu extends JFrame{
 			}
 		}
 	}
+
+        class ComboBoxListener implements ActionListener {
+	    public void actionPerformed (ActionEvent ae) {
+		int inputLength = TextFieldInput.length();
+		int validLength = getValidLength();
+		if(validLength == -1){
+		    cardValidLabel.setText("Please select a card type!");
+		}
+		else if(inputLength > validLength){
+		    String overByNum = "Too many digits delete ";
+		    overByNum += Integer.toString(inputLength-validLength);
+
+		    cardValidLabel.setText(overByNum);
+		}
+		else{
+		    cardValidLabel.setText("");
+		}
+	    }
+	}
     
-	// creates the text field and buttons and adds them to JFrame
-	public void initUI() {
+		// creates the text field and buttons and adds them to JFrame
+		public void initUI() {
 		cardNumberField = new JTextField(20);
 		validateButton = new JButton("Validate");
 		generateButton = new JButton("Generate");
 		showDigitsCheckBox = new JCheckBox("Show Digits");
 		cardValidLabel = new JLabel("");
-        cardTypeLabel = new JLabel("Card Type:");
+                cardTypeLabel = new JLabel("Card Type:");
 	
 		cardNumberField.setText("Enter credit card number here");
 		cardTypeComboBox = new JComboBox();
@@ -181,17 +200,33 @@ public class Menu extends JFrame{
 				    else{
 					//otherwise if the length is greater than 1, subtract one digit from input
 					TextFieldInput = TextFieldInput.substring(0,TextFieldInput.length()-1);
-				    }   
-				return;
+				    }
 				}
+				int inputLength = TextFieldInput.length();
+                                int validLength = getValidLength();
+                                if(validLength == -1){
+                                    cardValidLabel.setText("Please select a card type!");
+                                }
+                                else if(inputLength > validLength){
+                                    String overByNum = "Too many digits delete ";
+                                    overByNum += Integer.toString(inputLength-validLength);
+
+                                    cardValidLabel.setText(overByNum);
+                                }
+                                else{
+                                    cardValidLabel.setText("");
+                                }
+				System.out.println(TextFieldInput);
+				return;
 			    }
+			
 			    //checks if the key typed is enter
 			    if(keyType == KeyEvent.VK_ENTER){
 				int checkLength = TextFieldInput.length();
 				int validLength = getValidLength();
 				try{
 				    if(validLength == -1){
-					cardValidLabel.setText("Please select card type!");
+					cardValidLabel.setText("Please select a card type!");
 				    }
 				    else if (CCValidator.isValid(TextFieldInput)){
 					//set card type variable, print to label
@@ -227,13 +262,29 @@ public class Menu extends JFrame{
 			    keyEvent.consume(); //http://stackoverflow.com/questions/7525154/jtextfields-settext-method-doesnt-work-from-a-keylistener
 			    if(!((keyType == 8) || (keyType == KeyEvent.VK_ENTER))){
 				TextFieldInput += keyEvent.getKeyChar();
+				int inputLength = TextFieldInput.length();
+				int validLength = getValidLength();
+				if(validLength == -1){
+				    cardValidLabel.setText("Please select a card type!");
+				}
+				else if(inputLength > validLength){
+				    String overByNum = "Too many digits delete ";
+				    overByNum += Integer.toString(inputLength-validLength);
+
+				    cardValidLabel.setText(overByNum);
+				}
+				else{
+				    cardValidLabel.setText("");
+				}
 				//System.out.println(TextFieldInput); used to see if TextFieldInput updates correctly
 			    }
+			    
 			    String asteriskString = createAsteriskString(TextFieldInput);
 			    if(showDigitsCheckBox.isSelected())
 				cardNumberField.setText(TextFieldInput);
 			    else
 			    cardNumberField.setText(asteriskString);
+			    System.out.println(TextFieldInput);
 			    return;
 			}
 		  public void keyReleased(KeyEvent keyEvent){}
@@ -250,6 +301,8 @@ public class Menu extends JFrame{
 			    return;
 			}
 		    });
+
+		cardTypeComboBox.addActionListener(new ComboBoxListener());
 
 	}
 

@@ -104,6 +104,7 @@ public class Menu extends JFrame{
 
         class ComboBoxListener implements ActionListener {
 	    public void actionPerformed (ActionEvent ae) {
+		
 		int inputLength = TextFieldInput.length();
 		int validLength = getValidLength();
 		if(validLength == -1){
@@ -299,15 +300,15 @@ public class Menu extends JFrame{
 	int checkLength = TextFieldInput.length();
 	int validLength = getValidLength();
 	try{
-	    if(validLength == -1){
-		cardValidLabel.setText("Please select a card type!");
-		return;
-	    }
-	    else if (CCValidator.isValid(TextFieldInput)){
+	    if (CCValidator.isValid(TextFieldInput)){
 		//set card type variable, print to label
 		cardTypeLabel.setText("Card Type: " + CCValidator.getCardType(TextFieldInput));
-		cardValidLabel.setText("This is a valid card number!");
+		cardValidLabel.setText("Valid " + CCValidator.getCardType(TextFieldInput)+ " card number!");
 	    }
+	    else if(validLength == -1){
+                cardValidLabel.setText("Please select a card type!");
+                return;
+            }
 	    else if(checkLength > validLength){
 		String overByNum = "Too many digits delete ";
 		overByNum += Integer.toString(checkLength-validLength);
@@ -336,7 +337,6 @@ public class Menu extends JFrame{
 	catch(NumberFormatException ex){
                 cardValidLabel.setText("Invalid character input!");
                 return;
-            
 	}
 
 

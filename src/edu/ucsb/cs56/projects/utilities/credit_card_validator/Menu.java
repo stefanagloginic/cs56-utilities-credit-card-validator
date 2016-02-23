@@ -71,6 +71,7 @@ public class Menu extends JFrame{
 		public void actionPerformed (ActionEvent ae) {
 		    TextFieldInput = ""; //Need to empty in case there was some previous input
 			Menu.this.cardType = (String)Menu.this.cardTypeComboBox.getSelectedItem();
+			cardValidLabel.setText("");
 			switch (Menu.this.cardType) {
 				case "Visa":
 				        showDigitsCheckBox.setSelected(true);

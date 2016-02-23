@@ -214,7 +214,7 @@ public class Menu extends JFrame{
                                 else{
                                     cardValidLabel.setText("");
                                 }
-				System.out.println(TextFieldInput);
+				//used to check card number System.out.println(TextFieldInput);
 				return;
 			    }
 			
@@ -250,7 +250,7 @@ public class Menu extends JFrame{
 				cardNumberField.setText(TextFieldInput);
 			    else
 			    cardNumberField.setText(asteriskString);
-			    System.out.println(TextFieldInput);
+			    //used to check output System.out.println(TextFieldInput);
 			    return;
 			}
 		  public void keyReleased(KeyEvent keyEvent){}

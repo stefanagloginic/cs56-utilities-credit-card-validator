@@ -59,19 +59,6 @@ public class Menu extends JFrame{
 		// sometimes generates bad cards (when last number is 10)
 		// Gotta change this to verify if the vard is validated or not
 		public void actionPerformed (ActionEvent ae) {
-		    /*if(TextFieldInput == ""){
-		        cardFieldContents = new String(cardNumberField.getText());
-		    }
-	       	else{
-		    String cardFieldContents = TextFieldInput; //changed new String(cardNumberField.getText())
-		    }
-			if (CCValidator.isValid(cardFieldContents)){
-			    //set card type variable, print to label
-			    cardTypeLabel.setText("Card Type: " + CCValidator.getCardType(cardFieldContents));
-			    cardValidLabel.setText("This is a valid card number!");
-			}
-			else
-			cardValidLabel.setText("This is an invalid card number!");*/
 		    validateHelper();
 		}
 	}
@@ -86,16 +73,24 @@ public class Menu extends JFrame{
 			Menu.this.cardType = (String)Menu.this.cardTypeComboBox.getSelectedItem();
 			switch (Menu.this.cardType) {
 				case "Visa":
-					cardNumberField.setText(Visa.generateCard());
+				        showDigitsCheckBox.setSelected(true);
+				        TextFieldInput = Visa.generateCard();
+					cardNumberField.setText(TextFieldInput);
 					break;
 				case "Amex":
-					cardNumberField.setText(AmericanExpress.generateCard());
+				        showDigitsCheckBox.setSelected(true);
+				        TextFieldInput = AmericanExpress.generateCard();
+					cardNumberField.setText(TextFieldInput);
 					break;
 				case "Discover":
-					cardNumberField.setText(Discover.generateCard());
+				        showDigitsCheckBox.setSelected(true);
+				        TextFieldInput = Discover.generateCard();
+					cardNumberField.setText(TextFieldInput);
 					break;
 				case "MasterCard":
-					cardNumberField.setText(MasterCard.generateCard());
+				        showDigitsCheckBox.setSelected(true);
+				        TextFieldInput = MasterCard.generateCard();
+					cardNumberField.setText(TextFieldInput);
 					break;
 				default:
 					cardNumberField.setText("Please select a card type!");
@@ -320,7 +315,11 @@ public class Menu extends JFrame{
 		return;
 	    }
 	    else if(checkLength < validLength){
-		cardValidLabel.setText("Not enough digits");
+		cardValidLabel.setText("Not enough digits!");
+		return;
+	    }
+	    else if(isInputInvalid()){
+		cardValidLabel.setText("Invalid character input!");
 		return;
 	    }
 	    else{
@@ -333,11 +332,26 @@ public class Menu extends JFrame{
 		return;
 	    }
 	}
+	catch(NumberFormatException ex){
+                cardValidLabel.setText("Invalid character input!");
+                return;
+            
+	}
+
 
 	TextFieldInput = "";
 	cardNumberField.setText("");
        
     }
+    private boolean isInputInvalid(){
+	for(int i=0; i<TextFieldInput.length(); ++i){
+	    if(!(Character.isDigit(TextFieldInput.charAt(i)))){
+		return true;
+	    }
+	}
+	return false;
+    }
+
 
 	// Main function calls constructor for a Menu instance
 	// Program logic is handled in initUI() method, which is

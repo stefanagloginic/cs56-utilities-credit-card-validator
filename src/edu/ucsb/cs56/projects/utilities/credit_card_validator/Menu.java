@@ -59,7 +59,7 @@ public class Menu extends JFrame{
 		// sometimes generates bad cards (when last number is 10)
 		// Gotta change this to verify if the vard is validated or not
 		public void actionPerformed (ActionEvent ae) {
-		    if(TextFieldInput == ""){
+		    /*if(TextFieldInput == ""){
 		        cardFieldContents = new String(cardNumberField.getText());
 		    }
 	       	else{
@@ -71,7 +71,8 @@ public class Menu extends JFrame{
 			    cardValidLabel.setText("This is a valid card number!");
 			}
 			else
-			    cardValidLabel.setText("This is an invalid card number!");
+			cardValidLabel.setText("This is an invalid card number!");*/
+		    validateHelper();
 		}
 	}
 
@@ -222,39 +223,7 @@ public class Menu extends JFrame{
 			
 			    //checks if the key typed is enter
 			    if(keyType == KeyEvent.VK_ENTER){
-				int checkLength = TextFieldInput.length();
-				int validLength = getValidLength();
-				try{
-				    if(validLength == -1){
-					cardValidLabel.setText("Please select a card type!");
-				    }
-				    else if (CCValidator.isValid(TextFieldInput)){
-					//set card type variable, print to label
-					cardTypeLabel.setText("Card Type: " + CCValidator.getCardType(TextFieldInput));
-					cardValidLabel.setText("This is a valid card number!");
-				    }
-				    else if(checkLength > validLength){
-                                        cardValidLabel.setText("Too many digits");
-                                    }
-				    else if(checkLength < validLength){
-                                        cardValidLabel.setText("Not enough digits");
-                                        TextFieldInput = "";
-                                        return;
-                                    }
-				    else{
-					cardValidLabel.setText("This is an invalid card number!");
-                                    }
-
-				}catch(ArrayIndexOutOfBoundsException ex){
-				    if(checkLength < validLength){
-					cardValidLabel.setText("Not enough digits");
-				        TextFieldInput = "";
-				        return;
-				    }
-				}
-				finally{		       
-				       TextFieldInput = "";
-				}
+				validateHelper();
 				return;
 			    }
 			}
@@ -328,6 +297,46 @@ public class Menu extends JFrame{
 	default:
 	    return -1;
 	}
+    }
+
+    private void validateHelper(){
+	int checkLength = TextFieldInput.length();
+	int validLength = getValidLength();
+	try{
+	    if(validLength == -1){
+		cardValidLabel.setText("Please select a card type!");
+		return;
+	    }
+	    else if (CCValidator.isValid(TextFieldInput)){
+		//set card type variable, print to label
+		cardTypeLabel.setText("Card Type: " + CCValidator.getCardType(TextFieldInput));
+		cardValidLabel.setText("This is a valid card number!");
+	    }
+	    else if(checkLength > validLength){
+		String overByNum = "Too many digits delete ";
+		overByNum += Integer.toString(checkLength-validLength);
+
+		cardValidLabel.setText(overByNum);
+		return;
+	    }
+	    else if(checkLength < validLength){
+		cardValidLabel.setText("Not enough digits");
+		return;
+	    }
+	    else{
+		cardValidLabel.setText("This is an invalid card number!");
+	    }
+
+	}catch(ArrayIndexOutOfBoundsException ex){
+	    if(checkLength < validLength){
+		cardValidLabel.setText("Not enough digits");
+		return;
+	    }
+	}
+
+	TextFieldInput = "";
+	cardNumberField.setText("");
+       
     }
 
 	// Main function calls constructor for a Menu instance

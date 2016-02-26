@@ -323,7 +323,7 @@ public class Menu extends JFrame{
 	    else if(isInputInvalid()){
 		cardValidLabel.setText("Invalid character input!");
 		return;
-	    }
+		}
 	    else{
 		cardValidLabel.setText("This is an invalid card number!");
 	    }

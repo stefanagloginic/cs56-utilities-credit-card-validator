@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.*;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;//new
 import java.awt.event.KeyEvent;
 
 /** Class displays a GUI that allows users to 
@@ -185,6 +187,16 @@ public class Menu extends JFrame{
 		validateButton.addActionListener(new ValidateListener());
 		generateButton.addActionListener(new GenerateListener());
 		//adding listener for keyboard input from user
+	       
+		cardNumberField.addMouseListener(new MouseListener(){
+			public void mouseClicked(MouseEvent e){
+			    if((cardNumberField.getText()) == "Enter credit card number here")
+				cardNumberField.setText("");
+			}
+			public void mouseExited(MouseEvent e){
+			}
+		    });
+	       
 		cardNumberField.addKeyListener(new KeyListener(){
 			public void keyPressed(KeyEvent keyEvent){
 			    keyType = keyEvent.getKeyCode();

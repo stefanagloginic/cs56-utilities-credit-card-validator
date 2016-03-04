@@ -104,7 +104,6 @@ public class Menu extends JFrame{
 			}
 		}
 	}
-
         class ComboBoxListener implements ActionListener {
 	    public void actionPerformed (ActionEvent ae) {
 		
@@ -162,7 +161,10 @@ public class Menu extends JFrame{
 
 		String[] description = { "Pick a card type","Visa", "MasterCard","Amex","Discover"};
 		for (int i = 0; i < 5; i++){cardTypeComboBox.addItem(description[i]);}
-      	
+
+		//want to fill generate combo box with amount of potential generate...
+		String[] generateNums = {"1","2","3"};
+		for (int i = 0; i < 3; i++){generateMultiple.addItem(generateNums[i]);}
  
         //create new grouplayout and set contentpane to this layout
         GroupLayout layout = new GroupLayout(this.getContentPane());

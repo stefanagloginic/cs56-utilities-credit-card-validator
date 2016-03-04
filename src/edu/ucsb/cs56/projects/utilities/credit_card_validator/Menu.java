@@ -123,7 +123,23 @@ public class Menu extends JFrame{
 		}
 	    }
 	}
-    
+    class NumberFieldMouseListener implements MouseListener{
+	public void mouseClicked(MouseEvent e){
+	    String text = cardNumberField.getText();
+	    if(text.equals("Enter credit card number here") || text.equals("Please select a card type!"))
+		    cardNumberField.setText("");
+	       }
+	    public void mouseEntered(MouseEvent e){}
+	    public void mouseExited(MouseEvent e){}
+	    public void mousePressed(MouseEvent e){}
+	    public void mouseReleased(MouseEvent e){}
+	}
+	
+		
+		
+		
+		
+		
 		// creates the text field and buttons and adds them to JFrame
 		public void initUI() {
 		cardNumberField = new JTextField(20);
@@ -187,15 +203,6 @@ public class Menu extends JFrame{
 		validateButton.addActionListener(new ValidateListener());
 		generateButton.addActionListener(new GenerateListener());
 		//adding listener for keyboard input from user
-	       
-		cardNumberField.addMouseListener(new MouseListener(){
-			public void mouseClicked(MouseEvent e){
-			    if((cardNumberField.getText()) == "Enter credit card number here")
-				cardNumberField.setText("");
-			}
-			public void mouseExited(MouseEvent e){
-			}
-		    });
 	       
 		cardNumberField.addKeyListener(new KeyListener(){
 			public void keyPressed(KeyEvent keyEvent){
@@ -281,7 +288,7 @@ public class Menu extends JFrame{
 		    });
 
 		cardTypeComboBox.addActionListener(new ComboBoxListener());
-
+		cardNumberField.addMouseListener(new NumberFieldMouseListener());
 	}
 
     private String createAsteriskString(String digits){

@@ -44,7 +44,7 @@ public class Menu extends JFrame{
 
 	//Simple Label to explain to user what is held in the comboBox
 	private JLabel cardTypeLabel;
-	
+    private JLabel numGen;
 	//Simple JLabel to tell user if card number is valid or not
 	private JLabel cardValidLabel;
 
@@ -148,7 +148,7 @@ public class Menu extends JFrame{
 		showDigitsCheckBox = new JCheckBox("Show Digits");
 		cardValidLabel = new JLabel("");
                 cardTypeLabel = new JLabel("Card Type:");
-	
+	        numGen = new JLabel("Generate Count:");
 		cardNumberField.setText("Enter credit card number here");
 		cardTypeComboBox = new JComboBox();
 		
@@ -184,6 +184,7 @@ public class Menu extends JFrame{
 		.addComponent(showDigitsCheckBox)
 		.addComponent(validateButton)
                 .addComponent(generateButton)
+		      .addComponent(numGen)
 		      .addComponent(generateMultiple))
         );
         
@@ -198,7 +199,9 @@ public class Menu extends JFrame{
 	      	.addComponent(generateButton))
 	    .addGroup(layout.createParallelGroup(LEADING)
 		.addComponent(validateButton))
+				.addGroup(layout.createParallelGroup(LEADING)
                 .addComponent(cardTypeLabel)
+					  .addComponent(numGen))
 	     .addGroup(layout.createParallelGroup(LEADING)
 	        .addComponent(cardTypeComboBox)
 		       .addComponent(generateMultiple)));

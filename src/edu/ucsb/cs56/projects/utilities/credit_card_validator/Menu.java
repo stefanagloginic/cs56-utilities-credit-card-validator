@@ -51,6 +51,7 @@ public class Menu extends JFrame{
     //ComboBox to hold all of the different card options
 	private JComboBox cardTypeComboBox = new JComboBox();
 
+        private JComboBox generateMultiple = new JComboBox();
     // Constructor for Menu calls the initUI() method
 	public Menu() {
 		initUI();
@@ -154,7 +155,7 @@ public class Menu extends JFrame{
 		
 		
 		this.setTitle("Credit Card Validator");
-		this.setSize(700,210);
+		this.setSize(1000,210);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
@@ -180,7 +181,8 @@ public class Menu extends JFrame{
             .addGroup(layout.createParallelGroup(LEADING)
 		.addComponent(showDigitsCheckBox)
 		.addComponent(validateButton)
-                .addComponent(generateButton))
+                .addComponent(generateButton)
+		      .addComponent(generateMultiple))
         );
         
         layout.linkSize(SwingConstants.HORIZONTAL, validateButton, generateButton);
@@ -195,7 +197,9 @@ public class Menu extends JFrame{
 	    .addGroup(layout.createParallelGroup(LEADING)
 		.addComponent(validateButton))
                 .addComponent(cardTypeLabel)
-	        .addComponent(cardTypeComboBox));
+	     .addGroup(layout.createParallelGroup(LEADING)
+	        .addComponent(cardTypeComboBox)
+		       .addComponent(generateMultiple)));
 
         pack();
      	this.setVisible(true);

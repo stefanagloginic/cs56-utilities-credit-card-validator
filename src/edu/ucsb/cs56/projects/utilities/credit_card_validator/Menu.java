@@ -23,9 +23,10 @@ public class Menu extends JFrame{
 	// in ComboBox
 	private String cardType = new String();
 
-	// Textfield where user can enter cardNumberField
-	private JTextField cardNumberField;
+	// TextArea where user can enter cardNumberField
+	//private JTextField cardNumberField;
 
+        private JTextArea cardNumberField;
         //Global instance variable for user input
         private String TextFieldInput = "";
 
@@ -142,19 +143,22 @@ public class Menu extends JFrame{
 		
 		// creates the text field and buttons and adds them to JFrame
 		public void initUI() {
-		cardNumberField = new JTextField(20);
+		    cardNumberField = new JTextArea("Enter credit card number here",1,20);
+		    JScrollPane scrollPane = new JScrollPane(cardNumberField);
+		    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		    
+		    
 		validateButton = new JButton("Validate");
 		generateButton = new JButton("Generate");
 		showDigitsCheckBox = new JCheckBox("Show Digits");
 		cardValidLabel = new JLabel("");
                 cardTypeLabel = new JLabel("Card Type:");
 	        numGen = new JLabel("Generate Count:");
-		cardNumberField.setText("Enter credit card number here");
 		cardTypeComboBox = new JComboBox();
 		
 		
 		this.setTitle("Credit Card Validator");
-		this.setSize(1000,210);
+		this.setSize(1000,300);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
@@ -175,7 +179,7 @@ public class Menu extends JFrame{
  
         layout.setHorizontalGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(LEADING)
-                .addComponent(cardNumberField)
+                .addComponent(scrollPane)
             	.addGroup(layout.createParallelGroup()
                     .addComponent(cardValidLabel)
 		    .addComponent(cardTypeLabel)
@@ -192,7 +196,7 @@ public class Menu extends JFrame{
  
         layout.setVerticalGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(BASELINE)
-                .addComponent(cardNumberField)
+                .addComponent(scrollPane)
 		.addComponent(showDigitsCheckBox))
             .addGroup(layout.createParallelGroup(LEADING)
 		.addComponent(cardValidLabel)
